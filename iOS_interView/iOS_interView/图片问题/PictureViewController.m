@@ -17,7 +17,10 @@ static NSString *const PIC_URL = @"https://4d2f-223-88-79-177.ngrok.io/pictures/
 
 /**-----主要要研究一下 图片压缩 解码 编码 上传 下载等-----*/
 @implementation PictureViewController
-
+- (void)dealloc {
+    
+    NSLog(@"---%s----",__func__);
+}
 - (void)viewDidLoad{
     
     [super viewDidLoad];
@@ -25,11 +28,11 @@ static NSString *const PIC_URL = @"https://4d2f-223-88-79-177.ngrok.io/pictures/
     self.imageView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 200, 300, 300)];
     [self.view addSubview:self.imageView];
     
-    NSMethodSignature *signature =[self methodSignatureForSelector:@selector(compressionBigImage2)];
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-    [invocation setTarget:self];
-    [invocation setSelector:@selector(compressionBigImage2)];
-    [invocation invoke];
+//    NSMethodSignature *signature =[self methodSignatureForSelector:@selector(compressionBigImage2)];
+//    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+//    [invocation setTarget:self];
+//    [invocation setSelector:@selector(compressionBigImage2)];
+//    [invocation invoke];
     
 //    NSMethodSignature *si2 =[NSMethodSignature signatureWithObjCTypes:"v24@0:8@16"];
 //    NSInvocation *invocation =[NSInvocation invocationWithMethodSignature:si2];
@@ -41,6 +44,8 @@ static NSString *const PIC_URL = @"https://4d2f-223-88-79-177.ngrok.io/pictures/
 //
 //    Method method = class_getInstanceMethod(PictureViewController.class, @selector(printStr:));
 //    NSLog(@"%s",method_getTypeEncoding(method));
+    
+    [self compressionBigImage2];
 }
 
 - (void)printStr:(NSString*)str{
@@ -58,22 +63,43 @@ static NSString *const PIC_URL = @"https://4d2f-223-88-79-177.ngrok.io/pictures/
     NSLog(@"%@>>",NSStringFromCGSize(presentImage.size));
 }
 
+
+- (size_t)getImageBitmapSize:(UIImage *)image {
+ 
+    CGImageRef imageRef = image.CGImage;
+    size_t width = CGImageGetWidth(imageRef);
+    size_t height = CGImageGetHeight(imageRef);
+    CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();
+    CGContextRef ctx = CGBitmapContextCreate(NULL, width, height, 8, 0, space, kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrderDefault);
+    CGContextDrawImage(ctx, CGRectMake( 0, 0, width, height), imageRef);
+    size_t perRow = CGImageGetBytesPerRow(imageRef);
+    size_t size = perRow * height;
+    CFRelease(ctx);
+    NSLog(@"size %@B,  %@K, %@M",@(size), @(size/1024), @(size/1024/1024));
+    return size;
+}
+
+
 - (void)compressionBigImage2{
     
-    UIImage *originImage = [UIImage imageNamed:@"超大图2.jpg"];
-    dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-    __block NSData *compressionData;
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        
-        NSLog(@"%f",sqrtf(4.0));
-        compressionData = [self compressBySizeWithMaxLength2:1024*1024*1 image:originImage];
-        NSLog(@"%f",compressionData.length/1024.0/1024.0);
-        dispatch_semaphore_signal(sem);
-    });
-    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
-    UIImage *presentImage=[UIImage imageWithData:compressionData];
-    self.imageView.image = presentImage;
-    NSLog(@"%@>>",NSStringFromCGSize(presentImage.size));
+    UIImage *originImage = [UIImage imageNamed:@"IMG_2481.JPG"];
+    NSData *data = UIImageJPEGRepresentation(originImage, 1);
+    CFDataRef rawData = CGDataProviderCopyData(CGImageGetDataProvider(originImage.CGImage));
+    CFRelease(rawData);
+    self.imageView.image = originImage;
+//    dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+//    __block NSData *compressionData;
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//
+//        NSLog(@"%f",sqrtf(4.0));
+//        compressionData = [self compressBySizeWithMaxLength2:1024*1024*1 image:originImage];
+//        NSLog(@"%f",compressionData.length/1024.0/1024.0);
+//        dispatch_semaphore_signal(sem);
+//    });
+//    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+//    UIImage *presentImage=[UIImage imageWithData:compressionData];
+//    self.imageView.image = presentImage;
+//    NSLog(@"%@>>",NSStringFromCGSize(presentImage.size));
 }
 
 - (NSData *)compressBySizeWithMaxLength:(NSInteger)maxLength image:(UIImage*)image{

@@ -667,13 +667,52 @@ class SolutionOffer10_I {
 }
 
 //剑指 Offer II 081. 允许重复选择元素的组合
-class OfferII81_Solution {
-    
-    func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
+//class OfferII81_Solution {
+//    
+//    func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
+//
+//    }
+//    
+//    func backtracking(_ candidates: [Int]) -> <#return type#> {
+//        <#function body#>
+//    }
+//}
 
-    }
+//剑指 Offer II 103. 最少的硬币数目
+class OfferII103_Solution {
     
-    func backtracking(_ candidates: [Int]) -> <#return type#> {
-        <#function body#>
+    func coinChange(_ coins: [Int], _ amount: Int) -> Int {
+        
+        var count = 0
+        var curAmount = 0
+        let sortCoins = coins.sorted { first, second in
+            
+            return first > second
+        }
+        
+        var index = 0
+        while index < sortCoins.count {
+            
+            if curAmount + sortCoins[index] == amount {
+                
+                curAmount = curAmount + sortCoins[index]
+                count += 1
+                break
+            }else if curAmount + sortCoins[index] < amount {
+                
+                curAmount = curAmount + sortCoins[index]
+                count += 1
+            }else{
+                
+                index += 1
+            }
+        }
+        if curAmount != amount {
+            
+            return -1
+        }
+        
+        return count
     }
 }
+

@@ -11,6 +11,9 @@
 #import <objc/runtime.h>
 #import "YYKitMacro.h"
 #import "CSTF.h"
+
+#define log(...) printf(__VA_ARGS__)
+
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 
 @property (strong,nonatomic)UITableView *myTableView;
@@ -36,27 +39,35 @@
 //#endif
 
 YYSYNTH_DYNAMIC_PROPERTY_OBJECT(textF, setTextF, RETAIN_NONATOMIC, CSTF*)
-
+#define data(a)
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    for (int i = 0; i<10; i++) {
+        
+        i = 10;
+    }
+    
+
     self.navigationItem.title =@"Main";
     self.navigationController.navigationBar.backgroundColor=[UIColor redColor];
     self.navigationController.navigationBar.barTintColor=[UIColor redColor];
     self.view.backgroundColor=[UIColor whiteColor];
     [self.view addSubview:self.myTableView];
     
-    
-  
-    
+        
+    @autoreleasepool {
+        
+        __weak typeof(self) weakselfobject = self;
+        
+    }
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
 
-//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//
-//        for (int i=0; i<100; i++) {
-//
-//            NSLog(@"%@",[NSThread currentThread]);
-//        }
-//    });
+        for (int i=0; i<100; i++) {
+
+            NSLog(@"%@",[NSThread currentThread]);
+        }
+    });
 //
 //    dispatch_async(dispatch_get_global_queue(0, 0), ^{
 //
@@ -135,9 +146,6 @@ YYSYNTH_DYNAMIC_PROPERTY_OBJECT(textF, setTextF, RETAIN_NONATOMIC, CSTF*)
     NSString *classString =self.learningViewControllers[indexPath.row];
     UITextField *tf = [self textF];
     UIViewController *viewController =[[NSClassFromString(classString) alloc]init];
-    self.vccc = viewController;
-    tf.delegate = viewController;
-    [tf resignFirstResponder];
     [self.navigationController pushViewController:viewController animated:YES];
 }
 

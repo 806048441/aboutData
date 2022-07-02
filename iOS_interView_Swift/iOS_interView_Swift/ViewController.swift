@@ -184,35 +184,7 @@ class ViewController: UIViewController {
         
         super.viewDidLoad()
         
-        Offer77_Solution.init().sortList(ListNode.init(-1, ListNode.init(5, ListNode.init(3, ListNode.init(4, ListNode.init(0), nil), nil), nil), nil))
-        
-        Solution_47.init().permuteUnique([1,2,3])
-        
-        Solution_8Queens.init().solveNQueens(4)
-        let link = SingleList<Int>.init()
-        link.add(1)
-        print(link)
-
-        link.add(1, 1)
-        print(link)
-
-        link.add(1, 2)
-        print(link)
-
-        link.add(1, 2)
-        print(link)
-
-        link.add(1, 2)
-        print(link)
-
-        link.add(1, 2)
-        print(link)
-
-        link.add(1, 2)
-        print(link)
-
-        link.add(1, 2)        
-        print(link)
+        OfferII103_Solution.init().coinChange([1,2,5], 11)
         
         var array:[Int8?] = [Int8].init(repeating: 0, count: 10)
 

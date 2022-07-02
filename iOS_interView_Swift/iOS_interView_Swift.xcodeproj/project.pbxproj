@@ -238,6 +238,16 @@
 			path = LinkList;
 			sourceTree = "<group>";
 		};
+		65B8AA4A283138770051084E /* LeetCode */ = {
+			isa = PBXGroup;
+			children = (
+				6526A11327FF2FA200C9EA6A /* OfferMaxKNums.swift */,
+				65DBE47D2826A8BA005D7F14 /* LeetCode.swift */,
+				658F20162823BD9600CDBC02 /* Backtracking.swift */,
+			);
+			path = LeetCode;
+			sourceTree = "<group>";
+		};
 		65EF87B82775FDB3003590A6 = {
 			isa = PBXGroup;
 			children = (
@@ -263,6 +273,7 @@
 		65EF87C32775FDB3003590A6 /* iOS_interView_Swift */ = {
 			isa = PBXGroup;
 			children = (
+				65B8AA4A283138770051084E /* LeetCode */,
 				658F201328204B3E00CDBC02 /* LinkList */,
 				65F98D5427F61675005C1B59 /* MJPrinter */,
 				65EF87C42775FDB3003590A6 /* AppDelegate.swift */,
@@ -292,9 +303,6 @@
 				65F98D6927F6A3C6005C1B59 /* FineSearchTreeMinKNode.swift */,
 				65F98D6D27F89F3B005C1B59 /* IsBalanceBinarySearchTree.swift */,
 				65F98D7127F8D26C005C1B59 /* LinkListToBinarySearchTree.swift */,
-				6526A11327FF2FA200C9EA6A /* OfferMaxKNums.swift */,
-				65DBE47D2826A8BA005D7F14 /* LeetCode.swift */,
-				658F20162823BD9600CDBC02 /* Backtracking.swift */,
 				6526A11527FF47CA00C9EA6A /* FindSortNumsStartEnd.swift */,
 				658CC9BF27D75FCF00E563F5 /* BubbleSort.swift */,
 				650FD81F280D9D010056C775 /* SelectionSort.swift */,

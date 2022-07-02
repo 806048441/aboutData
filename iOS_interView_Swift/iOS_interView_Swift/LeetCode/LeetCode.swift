@@ -27,3 +27,24 @@ class Solution_26 {
         return slow + 1
     }
 }
+
+//LCP 06. 拿硬币
+
+class Solution_06 {
+    
+    func minCount(_ coins: [Int]) -> Int {
+        
+        var minTimes = 0
+        for coin in coins {
+            
+            var times = coin/2
+            if coin%2 > 0 {
+                
+                times += 1
+            }
+            minTimes += times
+        }
+        return minTimes
+    }
+}
+
